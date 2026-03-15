@@ -1,17 +1,301 @@
 ---
+export const prerender = false;
 
+import Layout from '../layouts/Layout.astro';
+import '../styles/global.css';
+import '../styles/responsive.css';
+import {
+  getProfile, getSkillGroups, getProjects, getSocialLinks,
+  type Profile, type SkillGroup, type Project, type SocialLink,
+} from '../lib/sanity';
+
+const [profile, skillGroups, projects, socialLinks] = await Promise.all([
+  getProfile(), getSkillGroups(), getProjects(), getSocialLinks(),
+]);
+
+const p: Profile = profile ?? {
+  name: 'Ronak Prasad', displayName: 'Ronnie', role: 'Full-Stack Developer',
+  location: 'Sydney, AU', bio: [], tagline: '', available: true,
+  stats: [{ value: '4+', label: 'years exp.' }, { value: '20+', label: 'projects shipped' }, { value: '5', label: 'platforms' }],
+};
+
+const groups: SkillGroup[] = skillGroups?.length ? skillGroups : [
+  { _id: '1', title: 'Frontend', order: 1, skills: ['React', 'Next.js', 'TypeScript', 'JavaScript ES6+', 'HTML5', 'CSS3 / SASS', 'Tailwind CSS', 'Bootstrap', 'Responsive UI', 'REST API', 'Headless CMS', 'Astro'] },
+  { _id: '2', title: 'Backend & Databases', order: 2, skills: ['Node.js', 'PHP', 'MongoDB', 'Supabase', 'MySQL', 'PostgreSQL'] },
+  { _id: '3', title: 'Auth & Deployment', order: 3, skills: ['NextAuth.js', 'OAuth', 'Vercel', 'Netlify', 'AWS', 'cPanel', 'Git', 'GitHub', 'CI/CD'] },
+  { _id: '4', title: 'CMS & Platforms', order: 4, skills: ['WordPress', 'WooCommerce', 'Shopify', 'Squarespace', 'Webflow', 'Sanity'] },
+  { _id: '5', title: 'SEO / Marketing', order: 5, skills: ['Google Analytics', 'Google Search Console', 'Google Tag Manager', 'SEO Best Practices'] },
+  { _id: '6', title: 'Design', order: 6, skills: ['Figma', 'Adobe XD', 'Adobe Creative Cloud'] },
+];
+
+const projs: Project[] = projects?.length ? projects : [
+  { _id: 'p1', title: 'Music Teacher Directory', description: 'Platform for finding music teachers', url: 'https://teacher-directory.vercel.app/', repo: '#', year: '2025', order: 1, tags: ['React', 'TypeScript', 'Next.js', 'Node.js', 'Supabase', 'PostgreSQL'], featured: true },
+  { _id: 'p2', title: 'Project Management Platform', description: 'A full-stack SaaS project management application', url: 'https://splendid-mandazi-50e343.netlify.app/', repo: '#', year: '2026', order: 2, tags: ['React', 'TypeScript', 'Next.js', 'Neon', 'Node.js', 'PostgreSQL'], featured: true },
+  { _id: 'p3', title: 'Shopify custom theme', description: 'Bespoke storefront with pixel-perfect Figma-to-code build', url: '#', repo: '#', year: '2023', order: 3, tags: ['Shopify', 'Liquid', 'Tailwind'], featured: false },
+  { _id: 'p4', title: 'Portfolio CMS platform', description: 'Astro + Sanity headless portfolio with Cloudflare edge deployment', url: '#', repo: '#', year: '2024', order: 4, tags: ['Astro', 'Sanity', 'Cloudflare'], featured: false },
+];
+
+const socials: SocialLink[] = socialLinks?.length ? socialLinks : [
+  { _id: 's1', platform: 'GitHub', url: 'https://github.com/Ronak13495', order: 1 },
+  { _id: 's2', platform: 'LinkedIn', url: 'https://www.linkedin.com/in/ronakprasad/', order: 2 },
+  { _id: 's3', platform: 'Email', url: 'mailto:ronak13495@gmail.com', order: 3 },
+];
+
+const barSkills = [
+  { label: 'Frontend', percent: 92 },
+  { label: 'Backend', percent: 78 },
+  { label: 'Databases', percent: 75 },
+  { label: 'Design / Figma', percent: 80 },
+  { label: 'DevOps / Cloud', percent: 65 },
+  { label: 'CMS Platforms', percent: 88 },
+];
+
+const marqueeItems = groups.flatMap(g => g.skills);
+const marqueeDouble = [...marqueeItems, ...marqueeItems];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={`${p.name} — ${p.role}`}>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-logo">ronnie.dev</span>
+      <div class="nav-links">
+        <a href="#about"    class="nav-link">about</a>
+        <a href="#skills"   class="nav-link">skills</a>
+        <a href="#projects" class="nav-link">work</a>
+        <a href="#contact"  class="nav-link">contact</a>
+        {p.available && (
+          <div class="nav-pill">
+            <span class="pulse-dot"></span>open to work
+          </div>
+        )}
+        <!-- Theme toggle -->
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <!-- Sun icon — visible in dark mode -->
+          <svg class="icon-sun" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1"  x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22"  x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1"  y1="12" x2="3"  y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <!-- Moon icon — visible in light mode -->
+          <svg class="icon-moon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="hero-inner">
+      <div class="eyebrow" id="eyebrow">
+        <span class="eyebrow-text">{p.role} · {p.location}</span>
+        <div class="eyebrow-rule"></div>
+      </div>
+      <h1 class="hero-h1">
+       <span class="h1-inner h1-white" id="r1">hi, i'm {p.displayName}.</span> 
+	   <span class="h1-inner" id="r2"><span class="h1-acc">building</span><span class="h1-dim"> the web,</span></span> 
+	   <span class="h1-inner" id="r3"><span class="h1-dim">one </span><span class="h1-acc">deploy</span><span class="h1-dim"> at a time.</span></span>
+      </h1>
+      <div class="hero-foot" id="hero-foot">
+        <p class="hero-sub">Full-stack developer who loves turning ideas into fast, production-ready products — from writing the first line of code to shipping to the cloud.</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-p">view my work</a>
+          <a href="#contact"  class="btn-s">get in touch</a>
+        </div>
+      </div>
+      <div class="scroll-cue"><div class="scroll-cue-line"></div>scroll to explore</div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      {marqueeDouble.map(item => (
+        <span class="marquee-item">{item}<span class="marquee-star">✦</span></span>
+      ))}
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="sec" id="about">
+    <div class="sec-inner">
+      <div class="sec-label">about me</div>
+      <div class="about-grid">
+        <div class="about-copy reveal-left" id="about-copy">
+          <p>I'm <strong>{p.name}</strong> — a full-stack developer based in {p.location} with a passion for building digital experiences that are fast, beautiful and accessible.</p>
+          <p>I work across the full stack — from crafting <strong>pixel-perfect UIs in React and Next.js</strong> to building robust backends with <strong>Node.js, PHP and Postgres</strong>. I also have a strong eye for design, having worked extensively in <strong>Figma and Adobe XD</strong>.</p>
+          <p>When I'm not coding, I'm likely exploring new frameworks, contributing to open-source, or hunting for the best coffee in Sydney.</p>
+          <div class="about-stats">
+            {p.stats.map(stat => (
+              <div>
+                <span class="stat-val">{stat.value}</span>
+                <span class="stat-label">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="skill-bars" id="skill-bars">
+          {barSkills.map(skill => (
+            <div class="skill-bar-item">
+              <div class="skill-bar-head">
+                <span class="skill-bar-name">{skill.label}</span>
+                <span class="skill-bar-pct">{skill.percent}%</span>
+              </div>
+              <div class="skill-track">
+                <div class="skill-fill" style={`--target-w: ${skill.percent}%`}></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS GRID -->
+  <section class="sec" id="skills">
+    <div style="max-width: var(--container); margin: 0 auto; padding: 80px 48px 44px;">
+      <div class="sec-label">full skill set</div>
+    </div>
+    <div class="skills-grid" id="skill-groups" style="max-width: var(--container); margin: 0 auto;">
+      {groups.map((group, i) => (
+        <div class={`skill-group${i === groups.length - 1 && groups.length % 2 !== 0 ? ' skill-group-full' : ''}`}>
+          <div class="sg-title">{group.title}</div>
+          <div class="sg-tags">
+            {group.skills.map(skill => (
+              <span class="skill-tag">{skill}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="sec" id="projects">
+    <div class="sec-inner">
+      <div class="sec-label">selected work</div>
+      <div id="project-list">
+        {projs.map((proj, i) => (
+          <a href={proj.url ?? '#'} target="_blank" rel="noopener noreferrer" class="proj-row">
+            <div class="proj-left">
+              <span class="proj-num">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <div class="proj-name">{proj.title}</div>
+                <div class="proj-desc">{proj.description}</div>
+              </div>
+            </div>
+            <div class="proj-right">
+              <div class="proj-tags">
+                {proj.tags.map(tag => <span class="proj-tag">{tag}</span>)}
+              </div>
+              <span class="proj-year">{proj.year}</span>
+              <span class="proj-arrow">→</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="sec" id="contact">
+    <div class="sec-inner">
+      <div class="sec-label">get in touch</div>
+      <div class="contact-body">
+        <h2 class="contact-heading" id="contact-heading">
+          let's build<br />something <span>great</span><br />together.
+        </h2>
+        <div class="social-list">
+          {socials.map(link => (
+            <a href={link.url} target="_blank" rel="noopener noreferrer" class="soc-link">
+              <div class="soc-line"></div>
+              {link.platform.toLowerCase()}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-text">© {new Date().getFullYear()} {p.name} — built with Astro + Sanity + Cloudflare</span>
+      <span class="footer-text">designed &amp; developed by ronnie</span>
+    </div>
+  </footer>
+
+</Layout>
+
+<script>
+  // ── Theme toggle ────────────────────────────────────────
+  const root    = document.documentElement;
+  const toggle  = document.getElementById('theme-toggle')!;
+  const STORAGE = 'rp-theme';
+
+  // Restore saved preference
+  const saved = localStorage.getItem(STORAGE);
+  if (saved) root.setAttribute('data-theme', saved);
+
+  toggle.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme');
+    const next    = current === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem(STORAGE, next);
+  });
+
+  // ── Hero entrance ───────────────────────────────────────
+  setTimeout(() => {
+    document.getElementById('eyebrow')!.classList.add('vis');
+    setTimeout(() => document.getElementById('r1')!.classList.add('vis'), 160);
+    setTimeout(() => document.getElementById('r2')!.classList.add('vis'), 320);
+    setTimeout(() => document.getElementById('r3')!.classList.add('vis'), 480);
+    setTimeout(() => document.getElementById('hero-foot')!.classList.add('vis'), 640);
+  }, 100);
+
+  // ── Scroll reveal ───────────────────────────────────────
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const t = e.target as HTMLElement;
+      if (t.id === 'about-copy') t.classList.add('vis');
+      if (t.id === 'skill-bars') {
+        t.querySelectorAll<HTMLElement>('.skill-bar-item').forEach((el, i) => {
+          setTimeout(() => {
+            el.classList.add('vis');
+            el.querySelector<HTMLElement>('.skill-fill')?.classList.add('vis');
+          }, i * 110);
+        });
+      }
+      if (t.id === 'skill-groups') {
+        t.querySelectorAll<HTMLElement>('.skill-group').forEach((el, i) => {
+          setTimeout(() => el.classList.add('vis'), i * 80);
+        });
+      }
+      if (t.id === 'project-list') {
+        t.querySelectorAll<HTMLElement>('.proj-row').forEach((el, i) => {
+          setTimeout(() => el.classList.add('vis'), i * 110);
+        });
+      }
+      if (t.id === 'contact-heading') t.classList.add('vis');
+      io.unobserve(t);
+    });
+  }, { threshold: 0.1 });
+
+  ['about-copy', 'skill-bars', 'skill-groups', 'project-list', 'contact-heading']
+    .forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
+</script>

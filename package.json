@@ -9,9 +9,18 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
-    "astro": "^6.0.4"
+    "@astrojs/cloudflare": "^12.6.13",
+    "@motionone/dom": "^10.18.0",
+    "@sanity/client": "^7.17.0",
+    "@sanity/image-url": "^2.0.3",
+    "@tailwindcss/vite": "^4.2.1",
+    "astro": "^5.18.1",
+    "sanity": "^5.14.1",
+    "tailwindcss": "^4.2.1",
+    "wrangler": "^4.35.0"
   }
 }

@@ -1,0 +1,145 @@
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — Tablet (≤ 1024px)
+═══════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .hero-h1 {
+    font-size: clamp(40px, 6vw, 64px);
+  }
+  .hero-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .hero-sub { max-width: 100%; }
+ 
+  .skills-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .proj-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .proj-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .proj-tags { justify-content: flex-start; }
+  .contact-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .social-list { align-items: flex-start; }
+  .soc-link { flex-direction: row-reverse; justify-content: flex-end; }
+}
+ 
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — Mobile (≤ 768px)
+═══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Nav */
+  .nav-inner { padding: 16px 20px; }
+  .nav-logo  { font-size: 13px; }
+ 
+  .nav-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px; height: 32px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 1px;
+    background: #888; transition: transform .25s, opacity .25s;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+ 
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    background: rgba(8,8,8,0.98);
+    border-bottom: 0.5px solid rgba(255,255,255,0.07);
+    padding: 8px 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-link {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 15px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+  }
+  .nav-link::after { display: none; }
+  .nav-pill { margin: 12px 20px 8px; }
+ 
+  /* Hero */
+  .hero-inner { padding: 56px 20px 48px; }
+  .hero-h1 { font-size: clamp(36px, 10vw, 52px); }
+  .eyebrow-text { font-size: 11px; }
+  .eyebrow-rule { width: 60px; }
+  .hero-sub { font-size: 16px; }
+  .hero-btns { flex-direction: column; width: 100%; }
+  .btn-p, .btn-s { text-align: center; width: 100%; }
+  .scroll-cue { display: none; }
+ 
+  /* Sections */
+  .sec-inner { padding: 56px 20px; }
+  .sec-inner[style] { padding: 56px 20px 32px !important; }
+  .sec-label { font-size: 11px; margin-bottom: 32px; }
+ 
+  /* About */
+  .about-copy { font-size: 16px; }
+  .about-stats { gap: 24px; flex-wrap: wrap; }
+  .stat-val { font-size: 26px; }
+ 
+  /* Skills grid — single column on mobile */
+  .skills-grid { grid-template-columns: 1fr; }
+  .skill-group { padding: 24px 20px; }
+  .skill-group:nth-child(odd) { border-right: none; }
+  .skill-group-full { grid-column: 1; }
+ 
+  /* Projects */
+  .proj-row { padding: 20px 0; margin: 0; }
+  .proj-row:hover { background: none; }
+  .proj-name { font-size: 16px; }
+  .proj-desc { font-size: 13px; }
+  .proj-right { flex-wrap: wrap; gap: 10px; }
+  .proj-year { display: none; }
+  .proj-arrow { opacity: 1; transform: none; }
+ 
+  /* Contact */
+  .contact-heading { font-size: clamp(28px, 8vw, 40px); }
+ 
+  /* Footer */
+  .footer-inner { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
+  .footer-text--right { display: none; }
+}
+ 
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — Small mobile (≤ 480px)
+═══════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .hero-h1 { font-size: clamp(32px, 9vw, 44px); }
+  .about-stats { gap: 20px; }
+  .skill-tag { font-size: 11px; padding: 5px 10px; }
+  .proj-tags { gap: 4px; }
+  .proj-tag { font-size: 11px; padding: 4px 8px; }
+}
+ 
+/* Hide hamburger on desktop */
+@media (min-width: 769px) {
+  .nav-hamburger { display: none; }
+  .nav-links { display: flex !important; }
+}
+ 

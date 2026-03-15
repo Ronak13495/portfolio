@@ -1,0 +1,83 @@
+---
+interface Props { title?: string; description?: string; }
+const {
+  title = 'Ronak Prasad — Full-Stack Developer',
+  description = 'Full-stack developer based in Sydney crafting fast, accessible digital products.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <!-- Fonts preloaded -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <slot />
+
+  <script>
+    // ── Cursor ──────────────────────────────────────────────────────────────
+    const cur  = document.getElementById('cursor')!;
+    const ring = document.getElementById('cursor-ring')!;
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cur.style.left = mx + 'px';
+      cur.style.top  = my + 'px';
+    });
+
+    (function tick() {
+      rx += (mx - rx) * .11;
+      ry += (my - ry) * .11;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(tick);
+    })();
+
+    const hoverEls = 'a, button, .proj-row, .skill-tag, .stack-card, .soc-link, .nav-link, .btn-p, .btn-s, .nav-pill';
+    document.querySelectorAll<HTMLElement>(hoverEls).forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('hov'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
+    });
+
+    // ── Scroll reveal ───────────────────────────────────────────────────────
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const t = e.target as HTMLElement;
+
+        // Stagger children if data-stagger is set
+        if (t.dataset.stagger) {
+          const delay = Number(t.dataset.staggerDelay ?? 90);
+          t.querySelectorAll<HTMLElement>(':scope > *').forEach((child, i) => {
+            setTimeout(() => child.classList.add('vis'), i * delay);
+          });
+        } else {
+          const d = Number(t.dataset.delay ?? 0);
+          setTimeout(() => t.classList.add('vis'), d);
+        }
+
+        // Skill bar fill
+        t.querySelectorAll<HTMLElement>('.skill-fill').forEach((bar, i) => {
+          setTimeout(() => bar.classList.add('vis'), i * 110 + 200);
+        });
+
+        io.unobserve(t);
+      });
+    }, { threshold: .12 });
+
+    document.querySelectorAll<HTMLElement>('.reveal-up, .reveal-left, .reveal-scale, [data-stagger]')
+      .forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
