@@ -60,32 +60,47 @@ const marqueeDouble = [...marqueeItems, ...marqueeItems];
   <nav>
     <div class="nav-inner">
       <span class="nav-logo">ronnie.dev</span>
-      <div class="nav-links">
-        <a href="#about"    class="nav-link">about</a>
-        <a href="#skills"   class="nav-link">skills</a>
-        <a href="#projects" class="nav-link">work</a>
-        <a href="#contact"  class="nav-link">contact</a>
+
+      <!-- Mobile only: theme toggle + hamburger -->
+      <div class="nav-mobile-right">
+        <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <!-- Nav links (desktop inline / mobile dropdown) -->
+      <div class="nav-links" id="nav-links">
+        <a href="#about"    class="nav-link" onclick="closeMenu()">about</a>
+        <a href="#skills"   class="nav-link" onclick="closeMenu()">skills</a>
+        <a href="#projects" class="nav-link" onclick="closeMenu()">work</a>
+        <a href="#contact"  class="nav-link" onclick="closeMenu()">contact</a>
         {p.available && (
           <div class="nav-pill">
             <span class="pulse-dot"></span>open to work
           </div>
         )}
-        <!-- Theme toggle -->
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-          <!-- Sun icon — visible in dark mode -->
-          <svg class="icon-sun" viewBox="0 0 24 24">
+        <!-- Desktop only theme toggle -->
+        <button class="theme-toggle theme-toggle--desktop" id="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1"  x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22"  x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1"  y1="12" x2="3"  y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
           </svg>
-          <!-- Moon icon — visible in light mode -->
-          <svg class="icon-moon" viewBox="0 0 24 24">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
         </button>
@@ -106,9 +121,9 @@ const marqueeDouble = [...marqueeItems, ...marqueeItems];
         <div class="eyebrow-rule"></div>
       </div>
       <h1 class="hero-h1">
-       <span class="h1-inner h1-white" id="r1">hi, i'm {p.displayName}.</span> 
-	   <span class="h1-inner" id="r2"><span class="h1-acc">building</span><span class="h1-dim"> the web,</span></span> 
-	   <span class="h1-inner" id="r3"><span class="h1-dim">one </span><span class="h1-acc">deploy</span><span class="h1-dim"> at a time.</span></span>
+        <span class="h1-row"><span class="h1-inner h1-white" id="r1">hi, i'm {p.displayName}.</span></span>
+        <span class="h1-row"><span class="h1-inner" id="r2"><span class="h1-acc">building</span><span class="h1-dim"> the web,</span></span></span>
+        <span class="h1-row"><span class="h1-inner" id="r3"><span class="h1-dim">one </span><span class="h1-acc">deploy</span><span class="h1-dim"> at a time.</span></span></span>
       </h1>
       <div class="hero-foot" id="hero-foot">
         <p class="hero-sub">Full-stack developer who loves turning ideas into fast, production-ready products — from writing the first line of code to shipping to the cloud.</p>
@@ -244,19 +259,36 @@ const marqueeDouble = [...marqueeItems, ...marqueeItems];
 <script>
   // ── Theme toggle ────────────────────────────────────────
   const root    = document.documentElement;
-  const toggle  = document.getElementById('theme-toggle')!;
   const STORAGE = 'rp-theme';
 
-  // Restore saved preference
+  function applyTheme(theme: string) {
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem(STORAGE, theme);
+  }
+  function toggleTheme() {
+    applyTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+  }
+
   const saved = localStorage.getItem(STORAGE);
   if (saved) root.setAttribute('data-theme', saved);
 
-  toggle.addEventListener('click', () => {
-    const current = root.getAttribute('data-theme');
-    const next    = current === 'light' ? 'dark' : 'light';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem(STORAGE, next);
+  // Wire both desktop and mobile toggles
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+  document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
+
+  // ── Hamburger ───────────────────────────────────────────
+  const hamburger = document.getElementById('nav-hamburger')!;
+  const navLinks  = document.getElementById('nav-links')!;
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    hamburger.classList.toggle('open');
   });
+
+  (window as any).closeMenu = () => {
+    navLinks.classList.remove('open');
+    hamburger.classList.remove('open');
+  };
 
   // ── Hero entrance ───────────────────────────────────────
   setTimeout(() => {
