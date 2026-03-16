@@ -16,33 +16,33 @@
   --bg-marquee:       #0b0b0b;
   --bg-section:       #080808;
   --bg-hover:         #0e0e0e;
-  --border:           rgba(255,255,255,0.07);
+  --border:           #ffffff8f;
   --border-subtle:    #111;
   --border-mid:       #737272;
   --text-primary:     #ffffff;
   --text-secondary:   #bbb;
   --text-muted:       #666;
   --text-faint:       #2a2a2a;
-  --text-nav:         #888;
-  --text-eyebrow:     #666;
-  --text-h1-dim:      #464646;
+  --text-nav:         #e0e0e0;
+  --text-eyebrow:     #e0e0e0;
+  --text-h1-dim:      #989898;
   --text-sub:         #aaa;
   --text-marquee:     #a4a4a4;
   --text-about:       #bbb;
   --text-strong:      #eee;
   --text-stat-val:    #fff;
-  --text-stat-label:  #555;
-  --text-bar-name:    #aaa;
-  --text-bar-pct:     #555;
-  --text-sg-tags:     #777;
+  --text-stat-label:  #cdcdcd;
+  --text-bar-name:    #cdcdcd;
+  --text-bar-pct:     #cdcdcd;
+  --text-sg-tags:     #eceae4;
   --text-proj-name:   #ccc;
   --text-proj-desc:   #797979;
-  --text-proj-tag:    #9a9a9a;
-  --text-proj-num:    #9a9a9a;
-  --text-contact:     #4d4d4d;
-  --text-soc:         #666666;
-  --text-footer:      #797979;
-  --text-scroll:      #9a9a9a;
+  --text-proj-tag:    #eceae4;
+  --text-proj-num:    #eceae4;
+  --text-contact:     #cdcdcd;
+  --text-soc:         #cdcdcd;
+  --text-footer:      #cdcdcd;
+  --text-scroll:      #bababa;
   --skill-track:      #1e1e1e;
   --skill-group-bg:   transparent;
   --orb-1:            rgba(127,119,221,.16);
@@ -317,15 +317,15 @@ nav {
 
 .scroll-cue {
   display: flex; align-items: center; gap: 10px; margin-top: 52px;
-  font-family: var(--font-mono); font-size: 12px;
+  font-family: var(--font-mono); font-size: 13px;
   color: var(--text-scroll); letter-spacing: .1em; transition: color .35s;
 }
 .scroll-cue-line { width: 36px; height: 0.5px; background: var(--text-scroll); transition: background .35s; }
 
 /* ── MARQUEE ───────────────────────────────────────────── */
 .marquee-wrap {
-  border-top: 0.5px solid var(--border-subtle);
-  border-bottom: 0.5px solid var(--border-subtle);
+  border-top: 0.5px solid var(--accent);
+  border-bottom: 0.5px solid var(--accent);
   padding: 12px 0; overflow: hidden;
   background: var(--bg-marquee);
   transition: background .35s, border-color .35s;
